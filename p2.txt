@@ -1,0 +1,71 @@
+# Actualizar e instalar servicios
+sudo apt update
+sudo apt install apache2 vsftpd -y
+
+# Habilitar servicios
+sudo systemctl enable apache2 vsftpd ssh --now
+
+# Ver estado de servicios
+sudo systemctl status apache2
+sudo systemctl status vsftpd
+sudo systemctl status ssh
+
+
+# Obtener IP local
+ip a
+
+# Probar servicios
+curl http://192.168.1.101
+ftp 192.168.1.101
+ssh 192.168.1.101
+
+# IPTables - Bloquear puertos
+sudo iptables -I INPUT 1 -p tcp --dport 80 -j DROP
+sudo iptables -I INPUT 1 -p tcp --dport 21 -j DROP
+sudo iptables -I INPUT 1 -p tcp --dport 22 -j DROP
+
+# Ver reglas IPTables
+sudo iptables -L -n --line-numbers
+
+# Probar bloqueo
+curl http://192.168.1.101
+ftp 192.168.1.101
+ssh 192.168.1.101
+
+# IPTables - Habilitar nuevamente puertos
+sudo iptables -D INPUT 1
+sudo iptables -D INPUT 1
+sudo iptables -D INPUT 1
+
+# Probar nuevamente servicios
+curl http://192.168.1.101
+ftp 192.168.1.101
+ssh 192.168.1.101
+
+# Instalar UFW
+sudo apt install ufw -y
+
+# Habilitar UFW
+sudo ufw enable
+
+# Bloquear puertos con UFW
+sudo ufw deny 80
+sudo ufw deny 21
+sudo ufw deny 22
+
+# Ver estado de UFW
+sudo ufw status numbered
+
+# Probar bloqueo
+curl http://192.168.1.101
+ftp 192.168.1.101
+ssh 192.168.1.101
+
+# Habilitar puertos con UFW
+sudo ufw allow 80
+sudo ufw allow 21
+sudo ufw allow 22
+
+
+
+

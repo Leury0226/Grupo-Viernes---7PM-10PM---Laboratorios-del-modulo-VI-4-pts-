@@ -1,0 +1,27 @@
+# 1. Instalar GPG2
+sudo apt update
+sudo apt install gnupg2 -y
+
+# 2. Verificar versión
+gpg --version
+
+# 3. Crear directorio y archivo
+mkdir ~/cifrado
+cd ~/cifrado
+echo "Este es el mensaje secreto de la practica 1 gpg" > secreto.txt
+
+# 4. Generar clave GPG
+gpg --full-generate-key
+
+
+# 5. Cifrar el archivo
+gpg -e -r "prueba" secreto.txt
+
+# 6. Intentar leer el archivo cifrado
+cat secreto.txt.gpg
+
+# 7. Descifrar archivo
+gpg -d secreto.txt.gpg > secreto_descifrado.txt
+
+# 8. Ver contenido descifrado
+cat secreto_descifrado.txt
