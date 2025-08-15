@@ -10,10 +10,10 @@ sudo mkdir -p /etc/snort/rules
 
 # 4. Crear archivo de reglas personalizadas
 sudo nano /etc/snort/rules/local.rules
-alert icmp any any -> 192.168.1.101 any (msg:"[ALERTA] ICMP detectado"; sid:1000001; rev:1;)
-alert tcp any any -> 192.168.1.101 21 (msg:"[ALERTA] FTP detectado"; sid:1000002; rev:1;)
-alert tcp any any -> 192.168.1.101 22 (msg:"[ALERTA] SSH detectado"; sid:1000003; rev:1;)
-alert tcp any any -> 192.168.1.101 80 (msg:"[ALERTA] HTTP detectado"; sid:1000004; rev:1;)
+alert icmp any any -> 192.168.100.25 any (msg:"[ALERTA] ICMP detectado"; sid:1000001; rev:1;)
+alert tcp any any -> 192.168.100.25 (msg:"[ALERTA] FTP detectado"; sid:1000002; rev:1;)
+alert tcp any any -> 192.168.100.25 (msg:"[ALERTA] SSH detectado"; sid:1000003; rev:1;)
+alert tcp any any -> 192.168.100.25 (msg:"[ALERTA] HTTP detectado"; sid:1000004; rev:1;)
 
 # 5. Editar configuración principal de Snort
 sudo nano /etc/snort/snort.lua
@@ -32,4 +32,5 @@ ping 192.168.1.101
 telnet 192.168.1.101 21
 telnet 192.168.1.101 22
 telnet 192.168.1.101 80
+
 
