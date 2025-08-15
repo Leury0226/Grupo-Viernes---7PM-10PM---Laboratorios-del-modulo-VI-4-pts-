@@ -1,0 +1,36 @@
+# 🔹 Actualizar la lista de paquetes y el sistema
+sudo apt update && sudo apt -y upgrade
+
+# 🔹 Instalar el módulo PAM de Google Authenticator
+sudo apt -y install libpam-google-authenticator
+
+# 🔹 Cambiar al usuario con el que vas a iniciar sesión SSH
+su - leury
+
+# 🔹 Ejecutar el asistente para configurar Google Authenticator
+#    - Escanea el código QR con la app en tu teléfono.
+#    - Guarda la clave secreta y códigos de respaldo.
+#    - Responde 'y' a las preguntas recomendadas.
+google-authenticator
+
+# 🔹 Editar el archivo PAM de SSH para activar Google Authenticator
+#    Añade la línea: auth required pam_google_authenticator.so
+sudo nano /etc/pam.d/sshd
+
+# 🔹 Editar configuración de SSH para permitir 2FA
+#    Activa ChallengeResponseAuthentication y UsePAM
+sudo nano /etc/ssh/sshd_config
+
+# Dentro de sshd_config, asegurarse que estén así:
+# ChallengeResponseAuthentication yes
+# PasswordAuthentication yes
+# UsePAM yes
+# AuthenticationMethods password,keyboard-interactive
+
+# 🔹 Reiniciar el servicio SSH para aplicar cambios
+sudo systemctl restart ssh
+
+# 🔹 Probar el acceso SSH desde la máquina host
+#    Primero pedirá la contraseña del usuario.
+#    Luego pedirá el código de 6 dígitos de la app Google Authenticator.
+ssh leury@IP_DE_TU_VM
